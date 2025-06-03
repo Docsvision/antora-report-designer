@@ -1,0 +1,39 @@
+= Реализация источника данных API
+
+Если необходимые данные для отчёта хранятся в сторонней системе, в модуле предусмот-рена возможность использования API, как источника данных.
+
+Для создания источника данных API разработайте и зарегистрируйте на сервере приложений {dv} расширение с реализацией функций получения данных. Функции должны принимать словарь параметров `ReportLib.ReportParametersCollection` в формате `.json`, реализовать логику получения данных и возвращать `DataTable` с результирующей выборкой в формате `.json` для дальнейшего ее использования провайдером FastReport в отчёте.
+
+Пример метода серверного расширения, который должен получать параметр `documentId`, содержащий `id` документов, которые будут выведены в таблицу с указанием `id` автора:
+
+[source,csharp]
+----
+public class ServerExtension : StorageServerExtension
+{
+    [ExtensionMethod]
+    public string GetAuthors(string jsonParameters)
+    {
+        ReportParametersCollection parameters = JsonCon-vert.DeserializeObject<ReportParametersCollection>(jsonParameters);
+
+        DataTable dt = new DataTable("TableName");
+        dt.Columns.Add("Name", typeof(String));
+        dt.Columns.Add("Author", typeof(String));
+
+        foreach (string documentId in parameters["documentId"])
+        {
+            DataRow row = dt.NewRow();
+            Document document = objectContext.GetObject<Document>(documentId);
+            row["Name"] = document.MainInfo.Name;
+            row["Author"] = document.MainInfo.Author;
+            dt.Rows.Add(row);
+        }
+
+        string jsonDT = JsonConvert.SerializeObject(dt);
+        return jsonDT;
+    }
+}
+----
+
+Данное расширение должно быть зарегистрировано под именем `ReportAPISourceServerExtension`. После этого в карточке отчёта в таблице данных отчёта может быть создана строка с типом источника данных API, именем источника в шаблоне `TableName` и функцией `GetAuthors`.
+
+

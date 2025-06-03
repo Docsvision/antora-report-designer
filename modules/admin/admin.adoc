@@ -1,0 +1,7 @@
+* Администрирование модуля {rd}
+** xref:install.adoc[]
+** xref:config-module.adoc[]
+** xref:report-settings.adoc[]
+*** xref:api-source.adoc[]
+*** xref:providers.adoc[]
+** xref:test.adoc[]

@@ -1,0 +1,54 @@
+= Создание нового Провайдера
+
+Расширение провайдера представляет собой серверное расширение, содержащее класс, наследуемый от `DocsVision.Platform.StorageServer.Extensibility.StorageServerExtension`.
+
+Класс провайдера должен реализовать метод `GenerateReport` интерфейса `ReportLib.Interfaces.IReportProvider`. Данный метод вызывается основным сервисом гене-рации отчётов, и потому должен быть помечен атрибутом `ExtensionMethod`.
+
+Метод `GenerateReport` получает объект `ReportParametersCollection` в формате `.json` -- набор параметров в виде словаря ключ-значение, где ключ -- название параметра, а значение -- список его допустимых значений.
+
+.Словарь содержит предопределенные параметры:
+* `reportRowId` -- идентификатор строки шаблона отчёта в справочнике отчётов;
+* `format` -- формат файла отчёта, соответствует значению параметра _Расширение файла отчёта_ в справочнике параметров.
+* Метод возвращает объект `ReportLib.Models.ReportResponse` в формате `.json`, содержащий следующие поля:
+* `Report` -- строка отчёта в формате `base64`;
+* `Format` -- расширение файла отчёта;
+* `Error` -- текст ошибки.
+
+== Пример реализации нового провайдера
+
+[source,csharp]
+----
+using ReportLib.Interfaces;
+using ReportLib.Models;
+namespace ProviderSampleServerExtension
+{
+    public class ServerExtension : StorageServerExtension, IReportProvider
+    {
+        [ExtensionMethod]
+        public string GenerateReport(string jsonParameters)
+        {
+            ReportResponse response = null;
+            try
+            {
+                ReportParametersCollection parameters = JsonCon-vert.DeserializeObject<ReportParametersCollection>(jsonParameters);
+                ...
+                BaseUniversalItem reportRow = objectCon-text.GetObject<BaseUniversalItem>(new Guid(parameters["reportRowId"][0]));
+                ...
+                response = new ReportResponse() { Report = base64String, Format = parame-ters["format"][0], Error = null };
+            }
+            catch (Exception ex)
+            {
+                response = new ReportResponse() { Report = null, Format = null, Error = ex.Message };
+            }
+
+            string jsonResponse = JsonConvert.SerializeObject(response);
+            return jsonResponse;
+        }
+    }
+}
+----
+
+Итоговую сборку зарегистрируйте на сервере приложений {dv} под именем `<имя_провайдера_в_карточке_провайдера> + ServerExtension`. Пример регистрации сборки расширения нового провайдера на примере FastReport:
+
+ "FastReportServerExtension"="FastReportServerExtension.ServerExtension, FastReportServ-erExtension, Version=1.0.0.0, Culture=neutral, PublicKeyToken=064560e3f02203a1"
+

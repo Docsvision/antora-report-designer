@@ -1,0 +1,4 @@
+* Руководство разработчика модуля {rd}
+** xref:extension.adoc[]
+** xref:new-provider.adoc[]
+** xref:use-provider.adoc[]
