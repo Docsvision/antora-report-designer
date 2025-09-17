@@ -2,7 +2,7 @@
 
 Расширение провайдера представляет собой серверное расширение, содержащее класс, наследуемый от `DocsVision.Platform.StorageServer.Extensibility.StorageServerExtension`.
 
-Класс провайдера должен реализовать метод `GenerateReport` интерфейса `ReportLib.Interfaces.IReportProvider`. Данный метод вызывается основным сервисом гене-рации отчётов, и потому должен быть помечен атрибутом `ExtensionMethod`.
+Класс провайдера должен реализовать метод `GenerateReport` интерфейса `ReportLib.Interfaces.IReportProvider`. Данный метод вызывается основным сервисом генерации отчётов, и потому должен быть помечен атрибутом `ExtensionMethod`.
 
 Метод `GenerateReport` получает объект `ReportParametersCollection` в формате `.json` -- набор параметров в виде словаря ключ-значение, где ключ -- название параметра, а значение -- список его допустимых значений.
 
