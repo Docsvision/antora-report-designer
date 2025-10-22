@@ -54,6 +54,13 @@ a|Заполнить атрибуты:
 * Описание -- DV
 * Подключение -- заполнить строкой подключения имеющей следующий вид: `Data Source=наименование сервера;Initial Catalog=наименование базы данных;Integrated Security=False;User ID=логин;Password= пароль`.
 
+.Строка подключения к базе данных:
+[%collapsible]
+====
+{blank}::
+include::5.5.1@mgmtconsole:admin:install.adoc[tags=string]
+====
+
 Нажать на кнопку *Сохранить*.
 |Строка подключения строки справочника успешно создана.
 
@@ -71,7 +78,7 @@ a|Заполнить поля:
 * Имя источника в шаблоне -- `First_ten_user`
 * Тип источника данных `SQL`
 * Подключение -- `DV_Connect_BD`;
-* Функция -- `SELECT TOP (10) CONCAT(LastName, ' ', FirstName, ' ', MiddleName) AS Full_Name FROM [Docsvision].[dbo].[dvtable_\{dbc8ae9d-c1d2-4d5e-978b-339d22b32482}] WHERE LastName IS NOT NULL AND FirstName IS NOT NULL AND MiddleName IS NOT NULL ORDER BY LastName;`
+* Функция -- `SELECT TOP (10) CONCAT(LastName, ' ', FirstName, ' ', MiddleName) AS Full_Name FROM [ИМЯ-БД].[dbo].[dvtable_\{dbc8ae9d-c1d2-4d5e-978b-339d22b32482}] WHERE LastName IS NOT NULL AND FirstName IS NOT NULL AND MiddleName IS NOT NULL ORDER BY LastName;` Где `[ИМЯ-БД]` -- псевдоним БД.
 |Поля строки карточки заполнены и корректно отображаются.
 
 |Нажать на кнопку *Сохранить* и перейти в раздел _отчёты_.

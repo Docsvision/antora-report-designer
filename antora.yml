@@ -7,6 +7,7 @@ asciidoc:
     rd: 'Конструктор отчётов'
     pl-req: '5.5.6638 и выше'
     wc-req: '5.5.17 и выше'
+    of-what: 'Конструктора отчётов'
 
 nav:
 - modules/ROOT/nav.adoc
