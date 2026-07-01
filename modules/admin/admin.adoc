@@ -5,4 +5,6 @@
 *** xref:format.adoc[]
 *** xref:api-source.adoc[]
 *** xref:providers.adoc[]
+** xref:web-layouts.adoc[]
+
 ** xref:test.adoc[]
