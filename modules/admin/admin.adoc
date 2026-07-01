@@ -6,5 +6,6 @@
 *** xref:api-source.adoc[]
 *** xref:providers.adoc[]
 ** xref:web-layouts.adoc[]
-
+*** xref:doc-layout.adoc[]
+*** xref:folder-layout.adoc[]
 ** xref:test.adoc[]
